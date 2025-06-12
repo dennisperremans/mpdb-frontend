@@ -1,0 +1,118 @@
+<div class="container mt-5">
+  <!-- Info Banner -->
+  <div class="row text-center mb-4" [ngClass]="{ 'summary-ready': summaryLoaded }">
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Unique Songs</h5>
+        <p class="display-6">
+          <ng-container *ngIf="summaryLoaded; else summaryLoading">
+            <span class="summary-value">{{ uniqueSongCount }}</span>
+          </ng-container>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Total Gigs</h5>
+        <p class="display-6">
+          <ng-container *ngIf="summaryLoaded; else summaryLoading">
+            <span class="summary-value">{{ totalGigs }}</span>
+          </ng-container>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Songs Played</h5>
+        <p class="display-6">
+          <ng-container *ngIf="summaryLoaded; else summaryLoading">
+            <span class="summary-value">{{ totalSongsPlayed }}</span>
+          </ng-container>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Template -->
+  <ng-template #summaryLoading>
+    <div class="spinner-grow spinner-grow-sm text-dark" role="status"></div>
+  </ng-template>
+</div>
+
+
+  <!-- Main Content -->
+  <div class="row">
+    <!-- Sidebar -->
+    <aside class="col-md-3 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Filters</h5>
+          
+          <div class="filters">
+            <div class="mb-3">
+              <label for="venueSelect" class="form-label">Filter by Venue</label>
+              <select
+                id="venueSelect"
+                class="form-select"
+                [(ngModel)]="selectedVenue"
+                (change)="applyFilters()">
+                <option value="">All Venues</option>
+                <option *ngFor="let venue of venues" [value]="venue">{{ venue }}</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </aside>
+
+    <!-- Gigs List -->
+    <section class="col-md-9">
+      <div *ngIf="loading" class="alert alert-info">Loading gigs...</div>
+      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+      <!-- Paginator -->
+      <app-paginator
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        (pageChange)="onPageChange($event)">
+      </app-paginator>
+
+      <div class="mt-4" *ngIf="!loading && !error">
+        <div *ngFor="let gig of gigs" class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h3 class="card-title" role="button" [routerLink]="['/gigs', gig.id]">{{ gig.title.rendered }}</h3>
+            <h6 class="card-subtitle mb-2 text-muted">
+              <strong>Date:</strong> {{ gig.date | date: 'longDate' }}
+            </h6>
+
+            <!-- Songs preview -->
+            <div class="mb-3" *ngIf="gig.acf?.songs?.length > 0">
+              <ng-container *ngFor="let song of gig.acf.songs.slice(0, 5)">
+                <span class="badge bg-secondary me-1">{{ song.post_title }}</span>
+              </ng-container>
+              <span [routerLink]="['/gigs', gig.id]" *ngIf="gig.acf.songs.length > 5" class="badge bg-info" role="button">
+                + {{ gig.acf.songs.length - 5 }} other song{{ gig.acf.songs.length - 5 > 1 ? 's' : '' }}
+              </span>
+            </div>
+
+            <p class="card-text" [innerHTML]="gig.content.rendered"></p>
+            <a [routerLink]="['/gigs', gig.id]" class="btn btn-primary">View gig details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paginator -->
+      <app-paginator
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        (pageChange)="onPageChange($event)">
+      </app-paginator>
+    </section>
+  </div>
+</div>

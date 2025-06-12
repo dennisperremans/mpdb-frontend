@@ -1,0 +1,41 @@
+<div *ngIf="loading" class="alert alert-info">Loading...</div>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+<div *ngIf="gig" class="container mt-4">
+  <div class="row">
+    <!-- Main Content -->
+    <div class="col-md-8">
+      <h1>{{ gig.title.rendered }}</h1>
+      <p [innerHTML]="gig.content.rendered"></p>
+
+      <div *ngIf="gig.acf.songs?.length > 0" class="mt-4">
+        <h2>Songs</h2>
+        <ul class="list-group">
+          <li *ngFor="let song of gig.acf.songs" class="list-group-item">
+            <a [routerLink]="['/song', song.ID]">{{ song.post_title }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          Gig Info
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Date:</strong> {{ gig.date | date: 'MMMM d, y' }}</li>
+          <li class="list-group-item"><strong>Country:</strong> {{ gig.acf.country }}</li>
+          <li class="list-group-item"><strong>City:</strong> {{ gig.acf.city }}</li>
+          <li class="list-group-item"><strong>Venue:</strong> {{ gig.acf.venue_name }}</li>
+          <li class="list-group-item" *ngIf="gig.acf.tour_name"><strong>Tour:</strong> {{ gig.acf.tour_name }}</li>
+          <li class="list-group-item"><strong>Recording Available:</strong> {{ gig.acf.hasRecording ? 'Yes' : 'No' }}</li>
+          <li *ngIf="gig.acf.played_with_other_artist" class="list-group-item">
+            <strong>Played with:</strong> {{ gig.acf.played_with_other_artist }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

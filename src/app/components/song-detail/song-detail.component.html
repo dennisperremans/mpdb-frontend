@@ -1,0 +1,15 @@
+<div *ngIf="loading" class="alert alert-info">Loading...</div>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+<div *ngIf="song" class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mb-3" [innerHTML]="song.title.rendered"></h1>
+      <div class="card" *ngIf="song.content.rendered">
+        <div class="card-body">
+          <div [innerHTML]="song.content.rendered"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,27 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
 
+It is a frontend application built in Angular 20 for displaying a list of music gigs sourced from a WordPress backend with custom REST API endpoints.
+
+---
+
+## Features
+
+- Fetches and displays gigs from a WordPress REST API (`wp/v2/gig` custom post type).
+- Pagination support with a custom `PaginatorComponent`.
+- Sidebar filters (currently supports filtering gigs by **venue** — an ACF field).
+- Summary statistics loaded from custom WordPress API endpoints, including:
+  - Total unique songs
+  - Total gigs
+  - Total songs played
+- Shows loading spinners while fetching data.
+- Uses standalone components and Angular best practices.
+- Routing support for gig detail pages.
+
+---
+
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
+
 ## Development server
 
 To start a local development server, run:

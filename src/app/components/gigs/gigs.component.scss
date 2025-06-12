@@ -1,0 +1,7 @@
+.summary-value{
+  transition: opacity 0.3s ease-in;
+  opacity: 0;
+}
+.summary-ready .summary-value {
+  opacity: 1;
+}
