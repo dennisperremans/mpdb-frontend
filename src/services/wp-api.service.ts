@@ -34,4 +34,12 @@ export class WpApiService {
     getUniqueVenues(): Observable<string[]> {
         return this.http.get<string[]>(`${this.customApiBaseUrl}/venues`);
     }
+
+    getUniqueCountries(): Observable<string[]> {
+        return this.http.get<string[]>(`${this.customApiBaseUrl}/countries`);
+    }
+
+    getUniqueCities(): Observable<string[]> {
+        return this.http.get<string[]>(`${this.customApiBaseUrl}/cities`);
+    }
 }

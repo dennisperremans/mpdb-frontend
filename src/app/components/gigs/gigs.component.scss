@@ -1,7 +1,164 @@
+@use 'sass:color';
+@use '../../../styles/variables' as *;
+
 .summary-value{
   transition: opacity 0.3s ease-in;
   opacity: 0;
 }
 .summary-ready .summary-value {
   opacity: 1;
+}
+
+// Cards
+.filters {
+    background-color: $card-bg;
+    border: 1px solid $border-color;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    color: $text-light;
+}
+
+.gig-card {
+  background-color: $card-bg;
+  border: 1px solid $border-color;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  color: $text-light;
+
+  .gig-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: $text-light;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .gig-location {
+    font-size: 0.9rem;
+    color: $text-muted;
+  }
+
+  .gig-date {
+    font-size: 0.95rem;
+  }
+
+  .gig-time {
+    font-size: 0.8rem;
+    color: $text-muted;
+  }
+
+  .song-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .song-pill {
+    background-color: #111;
+    color: #eee;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+
+    &.more {
+      background-color: #0dcaf0;
+      color: #000;
+      font-weight: 500;
+    }
+  }
+
+  .view-setlist-link {
+    margin-top: 0.5rem;
+    display: inline-block;
+    font-weight: 500;
+    color: $primary-color;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+
+// Buttons
+.btn-primary {
+  background-color: $primary-color;
+  border-color: $primary-color;
+
+  &:hover {
+    background-color: color.adjust($primary-color, $lightness: -10%);
+    border-color: color.adjust($primary-color, $lightness: -10%);
+  }
+}
+
+// Selects and Inputs
+.form-select,
+.form-control {
+  background-color: $card-bg;
+  color: $text-light;
+  border: 1px solid $border-color;
+
+  option {
+    background-color: $card-bg;
+    color: $text-light;
+  }
+}
+
+// Badges
+.badge {
+  &.bg-secondary {
+    background-color: #444;
+    color: $text-light;
+  }
+
+  &.bg-info {
+    background-color: #0dcaf0;
+    color: #000;
+  }
+}
+
+// Alerts
+.alert {
+  &.alert-info {
+    background-color: #0dcaf033;
+    border-color: #0dcaf055;
+    color: $text-light;
+  }
+
+  &.alert-danger {
+    background-color: #dc354533;
+    border-color: #dc354555;
+    color: $text-light;
+  }
+}
+
+// Spinner
+.spinner-grow,
+.spinner-border {
+  color: $text-muted;
+}
+
+
+.btn-primary {
+  background-color: $primary-color;
+  border-color: $primary-color;
+  color: #fff;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: color.adjust($primary-color, $lightness: -10%);
+    border-color: color.adjust($primary-color, $lightness: -10%);
+    color: #fff;
+  }
+}
+
+.btn {
+  font-weight: 500;
+  border-radius: 0.3rem;
+  padding: 0.5rem 1rem;
 }

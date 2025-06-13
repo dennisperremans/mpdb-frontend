@@ -5,11 +5,11 @@
   <div class="row">
     <!-- Main Content -->
     <div class="col-md-8">
-      <h1>{{ gig.title.rendered }}</h1>
-      <p [innerHTML]="gig.content.rendered"></p>
+      <h1 class="text-light">{{ gig.title.rendered }}</h1>
+      <p class="text-light" [innerHTML]="gig.content.rendered"></p>
 
       <div *ngIf="gig.acf.songs?.length > 0" class="mt-4">
-        <h2>Songs</h2>
+        <h2 class="text-light mb-4">Setlist</h2>
         <ul class="list-group">
           <li *ngFor="let song of gig.acf.songs" class="list-group-item">
             <a [routerLink]="['/song', song.ID]">{{ song.post_title }}</a>

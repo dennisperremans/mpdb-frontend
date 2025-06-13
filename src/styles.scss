@@ -1,1 +1,36 @@
+@use 'sass:color';
+@use 'styles/variables' as *;
+
 @import 'bootstrap/dist/css/bootstrap.min.css';
+
+// Body and global layout
+body {
+  background-color: $bg-dark;
+  color: $text-dark;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.link-primary {
+  background-color: $primary-color;
+  border-color: $primary-color;
+  color: $text-dark;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: color.adjust($primary-color, $lightness: -10%);
+    border-color: color.adjust($primary-color, $lightness: -10%);
+    color: color.adjust($text-dark, $lightness: -10%);
+  }
+}
+
+.link {
+  font-weight: 500;
+  border-radius: 0.3rem;
+  padding: 0.5rem 1rem;
+}
+
+.text-light {
+  color: $text-light;
+}
+

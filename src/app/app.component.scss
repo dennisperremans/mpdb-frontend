@@ -1,0 +1,14 @@
+@use 'sass:color';
+@use '../styles/variables' as *;
+
+// Body and global layout
+body {
+  background-color: $bg-dark;
+  color: $text-light;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  padding-top: 2rem;
+}
+

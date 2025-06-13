@@ -1,0 +1,25 @@
+@use 'sass:color';
+@use '../../../styles/variables' as *;
+
+.navbar {
+  background-color: $bg-dark;
+
+  .nav-link {
+    color: $text-light;
+
+    &.active,
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  .navbar-brand {
+    color: $primary-color;
+    font-weight: bold;
+    font-size: 1.25rem;
+
+    &:hover {
+      color: color.adjust($primary-color, $lightness: 10%);
+    }
+  }
+}

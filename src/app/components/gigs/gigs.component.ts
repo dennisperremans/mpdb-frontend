@@ -33,12 +33,18 @@ export class GigsComponent implements OnInit {
   //filters
   venues: string[] = [];
   selectedVenue: string = '';
+  countries: string[] = [];
+  selectedCountry: string = '';
+  cities: string[] = [];
+  selectedCity: string = '';
 
   constructor(private wpApiService: WpApiService) {}
 
   ngOnInit(): void {
     // Filters
     this.loadVenues();
+    this.loadCountries();
+    this.loadCities();
 
     // Load data
     this.loadGigs();
@@ -97,6 +103,28 @@ export class GigsComponent implements OnInit {
       },
       error: (err) => {
         console.error('Failed to load venues:', err);
+      }
+    });
+  }
+
+  loadCountries(): void {
+    this.wpApiService.getUniqueCountries().subscribe({
+      next: (countries) => {
+        this.countries = countries;
+      },
+      error: (err) => {
+        console.error('Failed to load countries:', err);
+      }
+    });
+  }
+
+  loadCities(): void {
+    this.wpApiService.getUniqueCities().subscribe({
+      next: (cities) => {
+        this.cities = cities;
+      },
+      error: (err) => {
+        console.error('Failed to load cities:', err);
       }
     });
   }
