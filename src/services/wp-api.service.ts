@@ -48,7 +48,7 @@ export class WpApiService {
             venue_name?: string;
             country?: string;
             city?: string;
-            keyword?: string; // <-- New keyword param
+            keyword?: string;
         },
         page = 1,
         perPage = 10
