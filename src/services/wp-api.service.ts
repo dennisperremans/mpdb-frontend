@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
@@ -42,4 +42,44 @@ export class WpApiService {
     getUniqueCities(): Observable<string[]> {
         return this.http.get<string[]>(`${this.customApiBaseUrl}/cities`);
     }
+
+    getFilteredGigs(
+        filters: {
+            venue_name?: string;
+            country?: string;
+            city?: string;
+            keyword?: string; // <-- New keyword param
+        },
+        page = 1,
+        perPage = 10
+    ): Observable<any> {
+
+        let params = new HttpParams()
+            .set('page', page)
+            .set('per_page', perPage);
+
+        if (filters.venue_name) {
+            params = params.set('venue_name', filters.venue_name);
+        }
+
+        if (filters.country) {
+            params = params.set('country', filters.country);
+        }
+
+        if (filters.city) {
+            params = params.set('city', filters.city);
+        }
+
+        if (filters.keyword) {
+            params = params.set('keyword', filters.keyword);
+        }
+
+        return this.http.get<any[]>(`${this.customApiBaseUrl}/gigs`, {
+            params,
+            observe: 'response'
+        });
+    }
+
+
+
 }

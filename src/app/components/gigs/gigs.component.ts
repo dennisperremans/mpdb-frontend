@@ -3,13 +3,13 @@ import { WpApiService } from '../../../services/wp-api.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { PaginatorComponent } from '../paginator/paginator.component'; 
+import { PaginatorComponent } from '../paginator/paginator.component';
 
 @Component({
   selector: 'app-gigs',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     RouterModule,
     FormsModule,
     PaginatorComponent
@@ -19,7 +19,6 @@ import { PaginatorComponent } from '../paginator/paginator.component';
 })
 export class GigsComponent implements OnInit {
   gigs: any[] = [];
-  songs: any[] = [];
   loading = false;
   error: string | null = null;
   currentPage = 1;
@@ -30,23 +29,24 @@ export class GigsComponent implements OnInit {
   totalGigs = 0;
   totalSongsPlayed = 0;
 
-  //filters
+  // filters
   venues: string[] = [];
   selectedVenue: string = '';
   countries: string[] = [];
   selectedCountry: string = '';
   cities: string[] = [];
   selectedCity: string = '';
+  keyword: string = '';
 
   constructor(private wpApiService: WpApiService) {}
 
   ngOnInit(): void {
-    // Filters
+    // Load filters data
     this.loadVenues();
     this.loadCountries();
     this.loadCities();
 
-    // Load data
+    // Load initial gigs and summary
     this.loadGigs();
     this.fetchSummary();
   }
@@ -56,6 +56,7 @@ export class GigsComponent implements OnInit {
     this.wpApiService.getGigItems('gig', this.currentPage).subscribe({
       next: (response) => {
         this.gigs = response.body;
+        console.log('Init gigs: ' + this.gigs);
         const totalPagesHeader = response.headers.get('X-WP-TotalPages');
         this.totalPages = totalPagesHeader ? +totalPagesHeader : 1;
         this.loading = false;
@@ -68,9 +69,48 @@ export class GigsComponent implements OnInit {
     });
   }
 
+  loadFilteredGigs(): void {
+    this.loading = true;
+    const filters = {
+      venue_name: this.selectedVenue || undefined,
+      country: this.selectedCountry || undefined,
+      city: this.selectedCity || undefined,
+      keyword: this.keyword || undefined,
+    };
+
+    this.wpApiService.getFilteredGigs(filters, this.currentPage).subscribe({
+      next: (response) => {
+        this.gigs = response.body;
+        console.log('Filtered gigs: ' + this.gigs);
+        const totalPagesHeader = response.headers.get('X-WP-TotalPages');
+        this.totalPages = totalPagesHeader ? +totalPagesHeader : 1;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to load filtered gigs';
+        this.loading = false;
+        console.error(err);
+      }
+    });
+  }
+
   onPageChange(newPage: number): void {
     this.currentPage = newPage;
-    this.loadGigs();
+
+    if (this.selectedVenue || this.selectedCountry || this.selectedCity) {
+      this.loadFilteredGigs();
+    } else {
+      this.loadGigs();
+    }
+  }
+
+  applyFilters(): void {
+    this.currentPage = 1;
+    if (this.selectedVenue || this.selectedCountry || this.selectedCity) {
+      this.loadFilteredGigs();
+    } else {
+      this.loadGigs();
+    }
   }
 
   fetchSummary() {
@@ -89,12 +129,6 @@ export class GigsComponent implements OnInit {
       }
     });
   }
-
-  /*
-   * Load the filter values
-   *
-   * 
-   */
 
   loadVenues(): void {
     this.wpApiService.getUniqueVenues().subscribe({
@@ -128,14 +162,4 @@ export class GigsComponent implements OnInit {
       }
     });
   }
-
-
-  applyFilters(): void {
-    this.currentPage = 1;
-    this.loadGigs();
-  }
-
-
-
-
 }

@@ -52,6 +52,17 @@
       <div class="card filters">
         <div class="card-body">
           <h5 class="card-title">Filters</h5>
+            <div class="mb-4 filter">
+              <label for="keyword">Search by keyword</label>
+              <input
+                id="keyword"
+                type="text"
+                class="form-control"
+                [(ngModel)]="keyword"
+                (input)="loadFilteredGigs()"
+                placeholder="Search by city, venue, country, song, or content"
+              />
+            </div>
           
             <div class="mb-4 filter">
               <label for="venueSelect" class="form-label">Filter by Venue</label>
